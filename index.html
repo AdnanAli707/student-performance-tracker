@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Performance Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section id="portalView" class="portal-view">
+      <div class="portal-content">
+        <div class="brand large-brand">
+          <div class="brand-mark">SP</div>
+          <div>
+            <p>Student</p>
+            <strong>Performance Tracker</strong>
+          </div>
+        </div>
+        <span class="eyebrow">Login Portal</span>
+        <h1>Choose your role to continue.</h1>
+        <div class="role-actions">
+          <button class="role-button" type="button" data-role="teacher">Teacher</button>
+          <button class="role-button" type="button" data-role="student">Student</button>
+        </div>
+        <div class="database-proof">
+          <strong>Database enabled</strong>
+          <span>Records are saved in browser storage and shown in the dashboard database view.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="loginView" class="login-view hidden">
+      <div class="login-card">
+        <button class="back-button" id="backToPortal" type="button">Back</button>
+        <span class="eyebrow" id="loginEyebrow">Login</span>
+        <h2 id="loginTitle">Teacher Login</h2>
+        <form id="loginForm" class="login-form">
+          <label>
+            ID
+            <input id="loginId" type="text" placeholder="TCH-001" required />
+          </label>
+          <label>
+            Username
+            <input id="loginUsername" type="text" placeholder="teacher" required />
+          </label>
+          <button class="primary-button" type="submit">Open Dashboard</button>
+        </form>
+        <p class="login-help" id="loginHelp">Teacher demo: ID TCH-001, username teacher</p>
+      </div>
+    </section>
+
+    <div id="appShell" class="app-shell hidden">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">SP</div>
+          <div>
+            <p>Student</p>
+            <strong>Performance Tracker</strong>
+          </div>
+        </div>
+
+        <div class="session-card">
+          <span class="eyebrow">Signed in</span>
+          <strong id="sessionName">Guest</strong>
+          <small id="sessionRole">Role</small>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Main modules">
+          <button class="nav-tab active teacher-only" type="button" data-panel="teacherPanel">
+            <span>Teacher Panel</span>
+          </button>
+          <button class="nav-tab" type="button" data-panel="studentPanel">
+            <span>Student Panel</span>
+          </button>
+          <button class="nav-tab teacher-only" type="button" data-panel="adminPanel">
+            <span>Admin Panel</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-card">
+          <span class="eyebrow">Grade Rules</span>
+          <div class="grade-rules">
+            <span>A: 80-100</span>
+            <span>B: 60-79</span>
+            <span>C: below 60</span>
+          </div>
+        </div>
+
+        <button class="logout-button" id="logoutBtn" type="button">Logout</button>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <span class="eyebrow">Classroom dashboard</span>
+            <h1>Track marks, attendance, and grades in one place.</h1>
+          </div>
+          <div class="stat-strip" aria-label="Database summary">
+            <div>
+              <span id="studentCount">0</span>
+              <small>Students</small>
+            </div>
+            <div>
+              <span id="classAverage">0%</span>
+              <small>Average</small>
+            </div>
+            <div>
+              <span id="attendanceAverage">0%</span>
+              <small>Attendance</small>
+            </div>
+          </div>
+        </header>
+
+        <section id="teacherPanel" class="panel active teacher-only" aria-labelledby="teacherTitle">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Teacher Panel</span>
+              <h2 id="teacherTitle">Upload marks and attendance</h2>
+            </div>
+            <button class="ghost-button" id="loadSampleBtn" type="button">Load sample data</button>
+          </div>
+
+          <form id="studentForm" class="form-grid">
+            <label>
+              Student ID
+              <input id="studentId" name="studentId" type="text" placeholder="STU-1001" required />
+            </label>
+            <label>
+              Student Username
+              <input id="studentName" name="studentName" type="text" placeholder="Ayesha Khan" required />
+            </label>
+            <label>
+              Subject
+              <input id="subject" name="subject" type="text" placeholder="Mathematics" required />
+            </label>
+            <label>
+              Marks
+              <input id="marks" name="marks" type="number" min="0" max="100" placeholder="85" required />
+            </label>
+            <label>
+              Attendance
+              <input id="attendance" name="attendance" type="number" min="0" max="100" placeholder="92" required />
+            </label>
+            <button class="primary-button" type="submit">Save Performance</button>
+          </form>
+
+          <div class="database-banner">
+            <strong>Database table</strong>
+            <span>Every saved row is written to browser storage and appears below.</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Username</th>
+                  <th>Subject</th>
+                  <th>Marks</th>
+                  <th>Attendance</th>
+                  <th>Grade</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="recordsTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="studentPanel" class="panel" aria-labelledby="studentTitle">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Student Panel</span>
+              <h2 id="studentTitle">View student performance</h2>
+            </div>
+          </div>
+
+          <form id="searchForm" class="search-row teacher-only">
+            <label>
+              Student ID
+              <input id="searchId" type="text" placeholder="Enter ID, e.g. STU-1001" required />
+            </label>
+            <button class="primary-button" type="submit">View Performance</button>
+          </form>
+
+          <div id="studentResult" class="student-result empty-state">
+            Enter a student ID to see marks, attendance, and grade.
+          </div>
+        </section>
+
+        <section id="adminPanel" class="panel teacher-only" aria-labelledby="adminTitle">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow">Admin Panel</span>
+              <h2 id="adminTitle">Visible database and controls</h2>
+            </div>
+            <div class="admin-actions">
+              <button class="ghost-button" id="exportBtn" type="button">Export JSON</button>
+              <button class="danger-button" id="clearBtn" type="button">Clear Database</button>
+            </div>
+          </div>
+
+          <div class="db-summary-grid">
+            <div class="metric"><span>Storage</span><strong>localStorage</strong></div>
+            <div class="metric"><span>Database Key</span><strong>student-performance-tracker-db</strong></div>
+            <div class="metric"><span>Login Check</span><strong>ID + Username</strong></div>
+          </div>
+
+          <label class="import-box">
+            Import database JSON
+            <textarea id="importJson" rows="6" placeholder='Paste exported JSON here'></textarea>
+            <button class="primary-button" id="importBtn" type="button">Import Data</button>
+          </label>
+
+          <div class="database-view">
+            <div class="database-header">
+              <strong>Visible database</strong>
+              <span id="lastUpdated">No updates yet</span>
+            </div>
+            <pre id="databaseJson"></pre>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
